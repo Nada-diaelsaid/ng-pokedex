@@ -1,0 +1,20 @@
+version: '2.2'
+
+services:
+  ng-pokedex-client:
+    build:
+      context: .
+      dockerfile: ./.docker/docker_build.dockerfile
+    command: ng serve --host 0.0.0.0
+    container_name: ng-pokedex-client-start
+    image: ng-pokedex-client
+    networks:
+      - dev-network
+    ports:
+      - '4200:4200'
+    volumes:
+      - .:/pokedex
+
+networks:
+  dev-network:
+    driver: bridge
