@@ -1,6 +1,6 @@
 version: '2.2'
 
-services:
+services:      
   ng-pokedex-client:
     build:
       context: .
@@ -14,7 +14,27 @@ services:
       - '4200:4200'
     volumes:
       - .:/pokedex
+      
+  ng-pokedex-test:
+    build:
+      context: .
+      dockerfile: ./.docker/tests.dockerfile
+    command: /bin/bash
+    container_name: ng-pokedex-test-start
+    image: ng-pokedex-test
+    volumes:
+      - .:/pokedex
 
+#  ng-pokedex-base:
+#    build:
+#      context: .
+#      dockerfile: ./.docker/base.dockerfile
+#    command: /bin/bash
+#    container_name: ng-pokedex-base-start
+#    image: ng-pokedex-base
+#    volumes:
+#      - .:/pokedex
+      
 networks:
   dev-network:
     driver: bridge

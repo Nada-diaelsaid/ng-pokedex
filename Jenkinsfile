@@ -6,5 +6,10 @@ pipeline {
         sh 'docker-compose build ng-pokedex-client'
       }
     }
+    stage('Test') {
+      steps {
+        sh 'docker-compose build ng-pokedex-test'
+      }
+    }
   }
 }
