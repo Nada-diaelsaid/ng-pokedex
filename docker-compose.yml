@@ -4,7 +4,7 @@ services:
   ng-pokedex-client:
     build:
       context: .
-      dockerfile: ./.docker/docker_build.dockerfile
+      dockerfile: ./.docker/build.dockerfile
     command: ng serve --host 0.0.0.0
     container_name: ng-pokedex-client-start
     image: ng-pokedex-client
