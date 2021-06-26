@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    def TIMESTAMP = sh(script: "echo `date +%Y%m%d%H%M%S`", returnStdout: true).trim()
+  }
   stages {
     stage('Build') {
       steps {
@@ -10,21 +13,21 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'docker-compose build ng-pokedex-test'
-          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-lint'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' -e TIMESTAMP=$TIMESTAMP ng-pokedex-lint'
         }
       }
     }
     stage('UnitTests') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-unittest'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' -e TIMESTAMP=$TIMESTAMP ng-pokedex-unittest'
         }
       }
     }
     stage('E2ETests') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-e2etest'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' -e TIMESTAMP=$TIMESTAMP ng-pokedex-e2etest'
         }
       }
     }
@@ -32,7 +35,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'docker-compose build ng-pokedex-prod'
-          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-prod'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' -e TIMESTAMP=$TIMESTAMP ng-pokedex-prod'
         }
       }
     }
