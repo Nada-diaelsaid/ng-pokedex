@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker-compose build ng-pokedex-client'
+        sh 'docker-compose build ng-pokedex-build'
       }
     }
     stage('Lint') {
@@ -25,6 +25,14 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'docker-compose run ng-pokedex-e2etest'
+        }
+      }
+    }
+    stage('Production') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'docker-compose build ng-pokedex-prod'
+          sh 'docker-compose run ng-pokedex-prod'
         }
       }
     }

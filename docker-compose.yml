@@ -1,13 +1,13 @@
 version: '2.2'
 
 services:      
-  ng-pokedex-client:
+  ng-pokedex-build:
     build:
       context: .
       dockerfile: ./.docker/build.dockerfile
     command: ng serve --host 0.0.0.0
-    container_name: ng-pokedex-client-start
-    image: ng-pokedex-client
+    container_name: ng-pokedex-build-start
+    image: ng-pokedex-build
     networks:
       - dev-network
     ports:
@@ -34,7 +34,21 @@ services:
   ng-pokedex-e2etest:
     command: ng e2e
     container_name: ng-pokedex-e2etest-start
-    image: ng-pokedex-test
+    image: ng-pokedex-test 
+
+  ng-pokedex-prod:
+    build:
+      context: .
+      dockerfile: ./.docker/prod.dockerfile
+    command: /bin/bash /pokedex/create_artifact.sh
+    container_name: ng-pokedex-prod-start
+    image: ng-pokedex-prod
+    networks:
+      - dev-network
+    ports:
+      - '4200:4200'
+    volumes:
+      - /artifacts:/artifacts
 
 #  ng-pokedex-base:
 #    build:
