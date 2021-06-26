@@ -10,21 +10,21 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'docker-compose build ng-pokedex-test'
-          sh 'docker-compose run ng-pokedex-lint'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-lint'
         }
       }
     }
     stage('UnitTests') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'docker-compose run ng-pokedex-unittest'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-unittest'
         }
       }
     }
     stage('E2ETests') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-          sh 'docker-compose run ng-pokedex-e2etest'
+          sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-e2etest'
         }
       }
     }
@@ -35,6 +35,11 @@ pipeline {
           sh 'docker-compose run -e BRANCH=' + env.BRANCH_NAME + ' ng-pokedex-prod'
         }
       }
+    }
+    // post {
+    //   success {
+    //     sh 'git merge -X theirs yourbranch'
+    //   }
     }
   }
 }

@@ -1,6 +1,6 @@
 FROM ng-pokedex-build:latest
 
-COPY create_artifact.sh /pokedex/create_artifact.sh 
+COPY scripts/run.sh /pokedex/scripts/run.sh 
 
 # install zip
 RUN apt-get install -y zip

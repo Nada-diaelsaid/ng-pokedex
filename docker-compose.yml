@@ -22,25 +22,31 @@ services:
     image: ng-pokedex-test
 
   ng-pokedex-lint:
-    command: ng lint
+    command: /bin/bash /pokedex/scripts/run.sh lint
     container_name: ng-pokedex-lint-start
     image: ng-pokedex-test
+    volumes:
+      - /artifacts:/artifacts
       
   ng-pokedex-unittest:
-    command: ng test
+    command: /bin/bash /pokedex/scripts/run.sh unit
     container_name: ng-pokedex-unittest-start
     image: ng-pokedex-test
+    volumes:
+      - /artifacts:/artifacts
 
   ng-pokedex-e2etest:
-    command: ng e2e
+    command: /bin/bash /pokedex/scripts/run.sh e2e
     container_name: ng-pokedex-e2etest-start
-    image: ng-pokedex-test 
+    image: ng-pokedex-test
+    volumes:
+      - /artifacts:/artifacts
 
   ng-pokedex-prod:
     build:
       context: .
       dockerfile: ./.docker/prod.dockerfile
-    command: /bin/bash /pokedex/create_artifact.sh
+    command: /bin/bash /pokedex/scripts/run.sh dist
     container_name: ng-pokedex-prod-start
     image: ng-pokedex-prod
     networks:
@@ -50,16 +56,6 @@ services:
     volumes:
       - /artifacts:/artifacts
 
-#  ng-pokedex-base:
-#    build:
-#      context: .
-#      dockerfile: ./.docker/base.dockerfile
-#    command: /bin/bash
-#    container_name: ng-pokedex-base-start
-#    image: ng-pokedex-base
-#    volumes:
-#      - .:/pokedex
-      
 networks:
   dev-network:
     driver: bridge
