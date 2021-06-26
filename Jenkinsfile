@@ -40,6 +40,6 @@ pipeline {
     //   success {
     //     sh 'git merge -X theirs yourbranch'
     //   }
-    }
+    // }
   }
 }
