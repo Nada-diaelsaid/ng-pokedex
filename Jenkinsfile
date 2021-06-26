@@ -8,6 +8,17 @@ pipeline {
       steps {
         sh 'docker-compose build ng-pokedex-build'
       }
+      post{
+        success {
+          if (env.BRANCH_NAME.startsWith("dev")) {
+            sh 'git merge -X env.BRANCH_NAME master'
+          }
+          else
+          {
+            echo "Skipping merging..."
+          }
+        }
+      }
     }
     stage('Lint') {
       steps {
@@ -39,10 +50,5 @@ pipeline {
         }
       }
     }
-    // post {
-    //   success {
-    //     sh 'git merge -X theirs yourbranch'
-    //   }
-    // }
   }
 }
