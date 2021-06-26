@@ -14,8 +14,8 @@ pipeline {
             if (env.BRANCH_NAME.startsWith("dev")) {
               sh 'git remote update'
               sh 'git fetch --all'
-              sh 'git checkout origin/master'
-              sh 'git checkout origin/' + env.BRANCH_NAME
+              // sh 'git checkout origin/master'
+              // sh 'git checkout origin/' + env.BRANCH_NAME
               sh 'git merge master'
             }
             else
