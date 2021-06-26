@@ -1,0 +1,12 @@
+# compiled output
+dist
+tmp
+
+# dependencies
+node_modules
+old
+
+# IDEs and utils
+.docker
+.vscode
+.github

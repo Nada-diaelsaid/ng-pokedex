@@ -25,6 +25,27 @@ services:
     volumes:
       - .:/pokedex
 
+  ng-pokedex-lint:
+    command: ng lint
+    container_name: ng-pokedex-lint-start
+    image: ng-pokedex-test
+    volumes:
+      - .:/pokedex
+      
+  ng-pokedex-unittest:
+    command: ng test
+    container_name: ng-pokedex-unittest-start
+    image: ng-pokedex-test
+    volumes:
+      - .:/pokedex
+
+  ng-pokedex-e2etest:
+    command: ng e2e
+    container_name: ng-pokedex-e2etest-start
+    image: ng-pokedex-test
+    volumes:
+      - .:/pokedex
+
 #  ng-pokedex-base:
 #    build:
 #      context: .

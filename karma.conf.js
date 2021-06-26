@@ -29,7 +29,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['ChromeHeadless'],
     customLaunchers: {
-      'ChromeHeadless': {
+      'ChromeHeadless': { // Run chrome in batch mode
         base: 'Chrome',
         flags: [
           '--no-sandbox',
@@ -40,7 +40,7 @@ module.exports = function (config) {
       }
     },
     // browsers: ['Firefox'],
-    singleRun: true,
+    singleRun: true, // close karma after run
     restartOnFileChange: true
   });
 };
