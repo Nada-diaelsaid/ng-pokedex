@@ -10,12 +10,14 @@ pipeline {
       }
       post{
         success {
-          if (env.BRANCH_NAME.startsWith("dev")) {
-            sh 'git merge -X env.BRANCH_NAME master'
-          }
-          else
-          {
-            echo "Skipping merging..."
+          script {
+            if (env.BRANCH_NAME.startsWith("dev")) {
+              sh 'git merge -X env.BRANCH_NAME master'
+            }
+            else
+            {
+              echo "Skipping merging..."
+            }
           }
         }
       }
