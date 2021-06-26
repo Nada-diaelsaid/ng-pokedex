@@ -3,8 +3,7 @@
 set -o pipefail
 
 echo "On branch ${BRANCH}..."
-timestamp=$(date +"%Y%m%d%H%M%S")
-OUTPUT_DIR=/artifacts/${BRANCH}/${timestamp}
+OUTPUT_DIR=/artifacts/${BRANCH}/${TIMESTAMP}
 exit_status=0
 
 if [ ! -d ${OUTPUT_DIR} ]; then
