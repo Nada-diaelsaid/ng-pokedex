@@ -12,11 +12,14 @@ pipeline {
         success {
           script {
             if (env.BRANCH_NAME.startsWith("dev")) {
-              sh 'git merge -X env.BRANCH_NAME master'
+              sh 'git fetch --all'
+              sh 'git checkout master'
+              sh 'git checkout ' + env.BRANCH_NAME
+              sh 'git merge master'
             }
             else
             {
-              echo "Skipping merging..."
+              sh 'echo "Skipping merging..."'
             }
           }
         }
