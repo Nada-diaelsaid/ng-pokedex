@@ -8,23 +8,6 @@ pipeline {
       steps {
         sh 'docker-compose build ng-pokedex-build'
       }
-      post{
-        success {
-          script {
-            if (env.BRANCH_NAME.startsWith("dev")) {
-              sh 'git remote update'
-              sh 'git fetch --all'
-              // sh 'git checkout origin/master'
-              // sh 'git checkout origin/' + env.BRANCH_NAME
-              sh 'git merge master'
-            }
-            else
-            {
-              sh 'echo "Skipping merging..."'
-            }
-          }
-        }
-      }
     }
     stage('Lint') {
       steps {
@@ -48,7 +31,7 @@ pipeline {
         }
       }
     }
-    stage('Production') {
+    stage('Publish') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'docker-compose build ng-pokedex-prod'
