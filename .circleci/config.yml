@@ -98,7 +98,21 @@ jobs:
             ansible-playbook -i inventory main-remote.yml
             pm2 start ~/web/index.js -f
       
-
+  smoke_test:
+    docker:
+      - image: alipine:latest
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test
+          command: |
+            URL="https://blog.udacity/com"
+            if curl -s --head ${URL}
+            then
+              return 0
+            else
+              return 1
+            fi
 workflows:
   my_workflow:
     # Run the welcome/run job in its own container
@@ -110,4 +124,5 @@ workflows:
           requires:
             - upload_file
       # - create_infrastructure
-      - configure_infrastructure
+      # - configure_infrastructure
+      - smoke_test
