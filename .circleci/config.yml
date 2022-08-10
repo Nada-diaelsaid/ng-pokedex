@@ -105,24 +105,19 @@ jobs:
       - run: apk add --update curl
       - run:
           name: smoke test
-          command: |
-            URL="https://blog.udacity.com"
-            if curl -s --head ${URL}
-            then
-              return 0
-            else
-              return 1
-            fi
+          command: return 1
+      - destroy_environment
+
 workflows:
   my_workflow:
     # Run the welcome/run job in its own container
     jobs:
       # - welcome/run
-      - print_greetings
-      - upload_file
-      - download_file:
-          requires:
-            - upload_file
-      # - create_infrastructure
+      # - print_greetings
+      # - upload_file
+      # - download_file:
+      #     requires:
+      #       - upload_file
+      - create_infrastructure
       # - configure_infrastructure
       - smoke_test
