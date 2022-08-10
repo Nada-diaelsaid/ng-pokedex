@@ -80,6 +80,24 @@ jobs:
       # - run: return 1
       - destroy_environment
 
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["07:1c:36:3b:3c:b2:04:79:a6:1f:96:1b:c8:4f"]
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run playbook and configure server
+          command: |
+            ansible-playbook -i inventory main-remote.yml
+            pm2 start ~/web/index.js -f
+      
+
 workflows:
   my_workflow:
     # Run the welcome/run job in its own container
@@ -90,4 +108,5 @@ workflows:
       - download_file:
           requires:
             - upload_file
-      - create_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure
