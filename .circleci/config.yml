@@ -79,3 +79,15 @@ jobs:
       # Uncomment the line below if you want to fail the current step
       # - run: return 1
       - destroy_environment
+
+workflows:
+  my_workflow:
+    # Run the welcome/run job in its own container
+    jobs:
+      # - welcome/run
+      - print_greetings
+      - upload_file
+      - download_file:
+          requires:
+            - upload_file
+      - create_infrastructure
