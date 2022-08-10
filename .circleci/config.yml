@@ -100,7 +100,7 @@ jobs:
       
   smoke_test:
     docker:
-      - image: alipine:latest
+      - image: alpine:latest
     steps:
       - run: apk add --update curl
       - run:
