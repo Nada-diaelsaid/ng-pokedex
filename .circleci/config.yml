@@ -125,6 +125,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get -y install tar gzip
+      - run:
           name: Fetch and save the old pipeline ID (bucket name) responsible for the last release.
           command: |
             aws cloudformation \
