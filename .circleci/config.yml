@@ -110,7 +110,7 @@ jobs:
 
   create_and_deploy_front_end:
     docker:
-      - image: amazon/cli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -121,7 +121,7 @@ jobs:
 
   get_last_deployment_id:
     docker:
-      - image: amazon/cli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run: apt-get -y install tar gzip
